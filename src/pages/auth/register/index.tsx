@@ -1,5 +1,5 @@
 // ** React Imports
-import { ChangeEvent, ReactNode, useState } from 'react'
+import { useState, ChangeEvent, ReactNode } from 'react'
 
 // ** Next Import
 import Link from 'next/link'
@@ -48,13 +48,15 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 }))
 
 const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ theme }) => ({
+  marginTop: theme.spacing(1.5),
+  marginBottom: theme.spacing(1.75),
   '& .MuiFormControlLabel-label': {
     color: theme.palette.text.secondary
   }
 }))
 
-const LoginPage = () => {
-  // ** State
+const Register = () => {
+  // ** States
   const [values, setValues] = useState<State>({
     password: '',
     showPassword: false
@@ -66,7 +68,6 @@ const LoginPage = () => {
   const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value })
   }
-
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
@@ -111,28 +112,26 @@ const LoginPage = () => {
             </Box>
             <Box sx={{ mb: 6 }}>
               <Typography variant='h4' sx={{ mb: 1.5 }}>
-                {`Welcome to ${themeConfig.templateName} CRM! 👋🏻`}
+                Adventure starts here 🚀
               </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>
-                Please sign-in to your account and start the adventure
-              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Make your app management easy and fun!</Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
               <CustomTextField
                 autoFocus
                 fullWidth
-                id='email'
-                label='Email'
+                id='username'
                 sx={{ mb: 4 }}
-                placeholder='john.doe@gmail.com'
+                label='Username'
+                placeholder='John.doe'
               />
+              <CustomTextField fullWidth type='email' label='Email' sx={{ mb: 4 }} placeholder='john.doe@gmail.com' />
               <CustomTextField
                 fullWidth
-                sx={{ mb: 1.5 }}
                 label='Password'
                 value={values.password}
-                id='auth-login-password'
                 placeholder='············'
+                id='auth-register-password'
                 onChange={handleChange('password')}
                 type={values.showPassword ? 'text' : 'password'}
                 InputProps={{
@@ -150,27 +149,28 @@ const LoginPage = () => {
                   )
                 }}
               />
-              <Box
-                sx={{
-                  mb: 1.75,
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <FormControlLabel control={<Checkbox />} label='Remember Me' />
-                <Typography component={LinkStyled} href='/pages/auth/forgot-password-v1'>
-                  Forgot Password?
-                </Typography>
-              </Box>
+              <FormControlLabel
+                control={<Checkbox />}
+                label={
+                  <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    <Typography sx={{ color: 'text.secondary' }}>I agree to </Typography>
+                    <Typography component={LinkStyled} href='/' onClick={e => e.preventDefault()} sx={{ ml: 1 }}>
+                      privacy policy & terms
+                    </Typography>
+                  </Box>
+                }
+              />
               <Button fullWidth type='submit' variant='contained' sx={{ mb: 4 }}>
-                Login
+                Sign up
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-                <Typography sx={{ color: 'text.secondary', mr: 2 }}>New on our platform?</Typography>
-                <Typography component={LinkStyled} href='/pages/auth/register-v1'>
-                  Create an account
+                <Typography sx={{ color: 'text.secondary', mr: 2 }}>Already have an account?</Typography>
+                <Typography
+                  component={LinkStyled}
+                  href='/auth/login'
+                  sx={{ fontSize: theme.typography.body1.fontSize }}
+                >
+                  Sign in instead
                 </Typography>
               </Box>
               <Divider
@@ -210,8 +210,6 @@ const LoginPage = () => {
   )
 }
 
-LoginPage.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+Register.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-LoginPage.guestGuard = true
-
-export default LoginPage
+export default Register
