@@ -68,8 +68,8 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
       contrastText: whiteColor
     },
     success: {
-      light: '#42CE80',
-      main: '#28C76F',
+      light: '#23AF62', //42CE80
+      main: '#23AF62', //28C76F
       dark: '#23AF62',
       contrastText: whiteColor
     },
